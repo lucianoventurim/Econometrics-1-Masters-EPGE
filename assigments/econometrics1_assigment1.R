@@ -19,7 +19,7 @@ set.seed(1)
 
 
 ### Question 6. Now, we load our data and perform our analysis. 
-data <- readRDS(file = "student_datasets/ps1_lucianoventurim.Rds")
+data <- readRDS(file = "data/econometrics1_assigment1_data.Rds")
 
 n <- length(data[,'x1'])
 
