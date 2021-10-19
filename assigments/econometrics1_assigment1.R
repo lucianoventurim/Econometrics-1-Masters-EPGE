@@ -6,16 +6,16 @@
 ### constant.
 set.seed(1)
 
-x1 <- rnorm(n = 1000, mean = 2, sd = 3)
-x2 <- rnorm(n = 1000, mean = 3, sd = 4)
-const <- rep(1,1000)
-e <- rnorm(n = 1000, mean = 0, sd = 10)
+###x1 <- rnorm(n = 1000, mean = 2, sd = 3)
+###x2 <- rnorm(n = 1000, mean = 3, sd = 4)
+###const <- rep(1,1000)
+###e <- rnorm(n = 1000, mean = 0, sd = 10)
 
-y <- 2*const+5*x1+2*x2+e
+###y <- 2*const+5*x1+2*x2+e
 
-dgp <- data.frame(y,const,x1,x2,e)
+###dgp <- data.frame(y,const,x1,x2,e)
 
-saveRDS(dgp, file = "student_datasets/ps1_lucianoventurim.Rds")
+###saveRDS(dgp, file = "student_datasets/ps1_lucianoventurim.Rds")
 
 
 ### Question 6. Now, we load our data and perform our analysis. 
