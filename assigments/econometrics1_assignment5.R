@@ -265,7 +265,7 @@ coeftest(did.reg, vcov = function(x)
 # rm(list = ls())
 ###_______________________________________________________________________###
 
-library(haven)
+library(haven) #to read dta data
 
 ### Question 2. We follow the Patrick Kline's paper "The impact of juvenile curfew
 ### laws on arrests of youth and adults", published in 2012.
@@ -351,6 +351,8 @@ ggplot(values, aes(x = time, y = estimate)) +
 ###_______________________________________________________________________###
 
 library(AER)
+# install.packages("ivpack")
+library(ivpack)
 ### Question 3. Item 1. Creating the lagged variables and the first difference
 
 q3_data <- q2_data_mod %>%
@@ -369,6 +371,8 @@ q3_model <- lm(data = q3_data,
                 formula = lnarrests_diff ~ lnarrests_diff_lag + 
                   Q_0_diff + 
                   Q1_diff + factor(year))
+coeftest(q3_model, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1"))
 
 ### We could also estimate the model directly with the plm function and compare
 
@@ -394,13 +398,20 @@ iv_lag <- ivreg(lnarrests_diff ~ lnarrests_diff_lag +
                 Q_0_diff + Q1_diff + factor(year) + lnarrests_2lag,
               data = q3_data)
 
+summary(iv_lag, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1"))
+
 iv_diff <- ivreg(lnarrests_diff ~ lnarrests_diff_lag + 
                 Q_0_diff + Q1_diff + factor(year) | 
                 Q_0_diff + Q1_diff + factor(year) + lnarrests_diff_2lag,
               data = q3_data)
+summary(iv_diff, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1"))
 
 iv_both <- ivreg(lnarrests_diff ~ lnarrests_diff_lag + 
                 Q_0_diff + Q1_diff + factor(year) | 
                 Q_0_diff + Q1_diff + factor(year) + lnarrests_2lag + 
                 lnarrests_diff_2lag,
               data = q3_data)
+summary(iv_both, vcov = function(x) 
+  vcovHC(x, cluster = "group", type = "HC1"))
